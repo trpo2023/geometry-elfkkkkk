@@ -2,6 +2,10 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+#define SQR(x) (x) * (x)
 
 int figure_num;
 Figure fig_obj[4];
@@ -88,6 +92,10 @@ int converter(char input[], int len, int countStart, int answer_point)
                     || input[countStart] == ')') {
                     continue;
                 } else {
+                    if ((input[countStart + 1] == ',') && (answer == 0)) {
+                        printf("Incorrect input!\n");
+                        return 0;
+                    }
                     if (input[countStart + 1] == ' '
                         || input[countStart + 1] == ','
                         || input[countStart + 1] == ')') {
@@ -175,6 +183,9 @@ int converter(char input[], int len, int countStart, int answer_point)
                fig_obj[figure_num].center.x,
                fig_obj[figure_num].center.y);
         printf("Circle's radius = %.2lf\n", fig_obj[figure_num].radius);
+        fig_obj[figure_num] = format_figure(&fig_obj[figure_num]);
+        printf("Perimeter of circle = %lf\n", fig_obj[figure_num].perimetr);
+        printf("Square of circle = %lf\n", fig_obj[figure_num].squre);
     }
     if (answer_point == 2) {
         if ((fig_obj[figure_num].p[0].x != fig_obj[figure_num].p[3].x)
@@ -190,6 +201,46 @@ int converter(char input[], int len, int countStart, int answer_point)
                    k + 1,
                    fig_obj[figure_num].p[k].y);
         }
+        fig_obj[figure_num] = format_figure(&fig_obj[figure_num]);
+        if (fig_obj[figure_num].perimetr && fig_obj[figure_num].squre) {
+            printf("Perimeter of triangle = %.2lf\n",
+                   fig_obj[figure_num].perimetr);
+            printf("Square of triangle = %lf\n", fig_obj[figure_num].squre);
+        }
     }
     return 0;
+}
+
+Figure format_figure(Figure* fig)
+{
+    if (fig->type == 1) {
+        double first_side
+                = sqrt(SQR((fig->p[1].x - fig->p[0].x))
+                       + SQR((fig->p[1].y - fig->p[0].y)));
+        double second_side
+                = sqrt(SQR((fig->p[2].x - fig->p[1].x))
+                       + SQR((fig->p[2].y - fig->p[1].y)));
+        double third_side
+                = sqrt(SQR((fig->p[3].x - fig->p[2].x))
+                       + SQR((fig->p[3].y - fig->p[2].y)));
+        if ((first_side < second_side + third_side)
+            && (second_side < first_side + third_side)
+            && (third_side < second_side + first_side)) {
+            fig->perimetr = first_side + second_side + third_side;
+            double halfp = fig->perimetr / 2;
+            fig->squre
+                    = sqrt(halfp * (halfp - first_side) * (halfp - second_side)
+                           * (halfp - third_side));
+            return *fig;
+
+        } else {
+            printf("Non-degenerate triangle!\n");
+        }
+    }
+    if (fig->type == 0) {
+        fig->squre = M_PI * SQR(fig->radius);
+        fig->perimetr = 2 * M_PI * fig->radius;
+        return *fig;
+    }
+    return *fig;
 }
