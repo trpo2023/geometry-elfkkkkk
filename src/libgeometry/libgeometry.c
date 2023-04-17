@@ -77,7 +77,7 @@ int converter(char input[], int len, int countStart, int answer_point)
         }
     }
     if (answer_point == 2) {
-        if (input[1] != '(') {
+        if (input[9] != '(') {
             printf("Incorrect input!\n");
             return 0;
         }
