@@ -16,7 +16,7 @@ int init(int numberOf)
     char input[50] = {'0'};
     int len = 0;
     int countStart = 0;
-    printf("Enter %d figure\nexample: triangle(x1 y1, x2 y2, x3 y3, x4 y4), "
+    printf("Enter %d figure\nexample: triangle((x1 y1, x2 y2, x3 y3, x4 y4)), "
            "circle(x1 y2, radius)\n",
            numberOf);
     while ((input[len] = getchar()) != '\n') {
@@ -65,13 +65,30 @@ int figure_check(char a[], char b[])
 
 int converter(char input[], int len, int countStart, int answer_point)
 {
-    for (int j = countStart + 1; j < len - 1; j++) {
-        if ((input[j] == ',') || (input[j] == '.') || (input[j] == ' ')
-            || ((input[j] >= '0') && (input[j] <= '9')))
-            continue;
-        else {
+    if (answer_point == 1) {
+        for (int j = countStart + 1; j < len - 1; j++){
+            if ((input[j] == ',') || (input[j] == '.') || (input[j] == ' ')
+                || ((input[j] >= '0') && (input[j] <= '9')))
+                continue;
+            else {
+                printf("Incorrect input!\n");
+                return 0;
+            }
+        }
+    }
+    if (answer_point == 2) {
+        if (input[1] != '(') {
             printf("Incorrect input!\n");
             return 0;
+        }
+        for (int j = countStart + 2; j < len - 2; j++){
+            if ((input[j] == ',') || (input[j] == '.') || (input[j] == ' ')
+                || ((input[j] >= '0') && (input[j] <= '9')))
+                continue;
+            else {
+                printf("Incorrect input!\n");
+                return 0;
+            }
         }
     }
 
