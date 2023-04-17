@@ -35,7 +35,8 @@ int init(int numberOf)
         }
 
     } else if (
-            (input[0] == triangleExpect[0]) || (input[0] == triangleExpect[0] - ' ')) {
+            (input[0] == triangleExpect[0])
+            || (input[0] == triangleExpect[0] - ' ')) {
         if (figure_check(input, triangleExpect) == 0) {
             fig_obj[numberOf].type = 1;
             if (converter(input, len, countStart, 2) == 0)
@@ -66,7 +67,7 @@ int figure_check(char a[], char b[])
 int converter(char input[], int len, int countStart, int answer_point)
 {
     if (answer_point == 1) {
-        for (int j = countStart + 1; j < len - 1; j++){
+        for (int j = countStart + 1; j < len - 1; j++) {
             if ((input[j] == ',') || (input[j] == '.') || (input[j] == ' ')
                 || ((input[j] >= '0') && (input[j] <= '9')))
                 continue;
@@ -81,7 +82,7 @@ int converter(char input[], int len, int countStart, int answer_point)
             printf("Incorrect input!\n");
             return 0;
         }
-        for (int j = countStart + 2; j < len - 2; j++){
+        for (int j = countStart + 2; j < len - 2; j++) {
             if ((input[j] == ',') || (input[j] == '.') || (input[j] == ' ')
                 || ((input[j] >= '0') && (input[j] <= '9')))
                 continue;
