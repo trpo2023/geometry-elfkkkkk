@@ -11,8 +11,8 @@ Figure fig_obj[4];
 int init(int numberOf)
 {
     figure_num = numberOf;
-    char circleEx[7] = {"circle"};
-    char triangleEx[9] = {"triangle"};
+    char circleExpect[7] = {"circle"};
+    char triangleExpect[9] = {"triangle"};
     char input[50] = {'0'};
     int len = 0;
     int countStart = 0;
@@ -27,16 +27,16 @@ int init(int numberOf)
     }
     input[len] = '\0';
 
-    if ((input[0] == circleEx[0]) || (input[0] == circleEx[0] - ' ')) {
-        if (figure_check(input, circleEx) == 0) {
+    if ((input[0] == circleExpect[0]) || (input[0] == circleExpect[0] - ' ')) {
+        if (figure_check(input, circleExpect) == 0) {
             fig_obj[numberOf].type = 0;
             if (converter(input, len, countStart, 1) == 0)
                 return 100;
         }
 
     } else if (
-            (input[0] == triangleEx[0]) || (input[0] == triangleEx[0] - ' ')) {
-        if (figure_check(input, triangleEx) == 0) {
+            (input[0] == triangleExpect[0]) || (input[0] == triangleExpect[0] - ' ')) {
+        if (figure_check(input, triangleExpect) == 0) {
             fig_obj[numberOf].type = 1;
             if (converter(input, len, countStart, 2) == 0)
                 return 100;
