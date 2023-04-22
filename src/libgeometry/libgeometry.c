@@ -30,17 +30,24 @@ int init(int numberOf)
     if ((input[0] == circleExpect[0]) || (input[0] == circleExpect[0] - ' ')) {
         if (figure_check(input, circleExpect) == 0) {
             fig_obj[numberOf].type = 0;
-            if (converter(input, len, countStart, 1) == 0)
-                return 100;
-        }
+            if (check_brackets(input, len, countStart, 1) == 100)
+                return 0;
+            if (converter(input, len, countStart, 1) == 100)
+                return 0;
+            if (output(input, len, countStart, 1) == -1)
+                return 0;
+            }
 
-    } else if (
-            (input[0] == triangleExpect[0])
-            || (input[0] == triangleExpect[0] - ' ')) {
+    } else if 
+    ((input[0] == triangleExpect[0]) || (input[0] == triangleExpect[0] - ' ')) {
         if (figure_check(input, triangleExpect) == 0) {
             fig_obj[numberOf].type = 1;
-            if (converter(input, len, countStart, 2) == 0)
-                return 100;
+            if (check_brackets(input, len, countStart, 2) == 100)
+                return 0;
+            if (converter(input, len, countStart, 2) == 100)
+                return 0;
+            if (output(input, len, countStart, 2) == -1)
+                return 0;
         }
     } else {
         printf("Please, enter the correct figure! Expected: 'circle' or "
@@ -64,7 +71,7 @@ int figure_check(char a[], char b[])
     return 0;
 }
 
-int converter(char input[], int len, int countStart, int answer_point)
+int check_brackets(char input[], int len, int countStart, int answer_point)
 {
     if (answer_point == 1) {
         for (int j = countStart + 1; j < len - 1; j++) {
@@ -72,59 +79,59 @@ int converter(char input[], int len, int countStart, int answer_point)
                 || ((input[j] >= '0') && (input[j] <= '9')))
                 continue;
             else {
-                printf("Incorrect input!\n");
-                return 0;
+                return 100;
             }
         }
     }
     if (answer_point == 2) {
         if (input[9] != '(') {
-            printf("Incorrect input!\n");
-            return 0;
+            return 100;
         }
         for (int j = countStart + 2; j < len - 2; j++) {
             if ((input[j] == ',') || (input[j] == '.') || (input[j] == ' ')
                 || ((input[j] >= '0') && (input[j] <= '9')))
                 continue;
             else {
-                printf("Incorrect input!\n");
-                return 0;
+                return 100;
             }
         }
     }
-
     if (input[len - 1] != ')') {
-        printf("Expected )");
-        return 0;
+        return 100;
     }
+    return 0;
+}
+
+int converter(char input[], int len, int countStart, int answer_point){
     char converter[20];
     int answer = 0;
 
-    if (answer_point == 1) {
-        while (input[countStart] != '\0') {
-            int k = 0;
-            for (countStart += 1; countStart < len; countStart++) {
-                if (input[countStart] == ' ' || input[countStart] == ','
-                    || input[countStart] == ')') {
-                    continue;
-                } else {
-                    if ((input[countStart + 1] == ',') && (answer == 0)) {
-                        printf("Incorrect input!\n");
-                        return 0;
-                    }
-                    if (input[countStart + 1] == ' '
-                        || input[countStart + 1] == ','
-                        || input[countStart + 1] == ')') {
-                        converter[k] = input[countStart];
-                        converter[k + 1] = '\0';
-                        countStart++;
-                        answer++;
-                        break;
-                    }
-                    converter[k] = input[countStart];
-                    k++;
+    while (input[countStart] != '\0') {
+        int k = 0;
+        for (countStart += 1; countStart < len; countStart++) {
+            if (input[countStart] == ' ' || input[countStart] == ','
+                || input[countStart] == ')') {
+                continue;
+            } else {
+                if ((input[countStart + 1] == ',') && (answer == 0)
+                    && (answer_point == 1)) {
+                    return 0;
                 }
+                if (input[countStart + 1] == ' '
+                    || input[countStart + 1] == ','
+                    || input[countStart + 1] == ')') {
+                    converter[k] = input[countStart];
+                    converter[k + 1] = '\0';
+                    countStart++;
+                    answer++;
+                    break;
+                }
+                converter[k] = input[countStart];
+                k++;
             }
+        }
+        if (answer_point == 1)
+        {
             if (answer == 1) {
                 fig_obj[figure_num].center.x = atof(converter);
             }
@@ -135,30 +142,9 @@ int converter(char input[], int len, int countStart, int answer_point)
                 fig_obj[figure_num].radius = atof(converter);
             }
         }
-    }
-    answer = 0;
-    if (answer_point == 2) {
-        while (input[countStart] != '\0') {
-            int k = 0;
-            for (countStart += 1; countStart < len; countStart++) {
-                if (input[countStart] == ' ' || input[countStart] == ','
-                    || input[countStart] == ')') {
-                    continue;
-                } else {
-                    if (input[countStart + 1] == ' '
-                        || input[countStart + 1] == ','
-                        || input[countStart + 1] == ')') {
-                        converter[k] = input[countStart];
-                        converter[k + 1] = '\0';
-                        countStart++;
-                        answer++;
-                        break;
-                    }
-                    converter[k] = input[countStart];
-                    k++;
-                }
-            }
-            switch (answer) {
+        if (answer_point == 2)
+        {
+                switch (answer) {
             case 1:
                 fig_obj[figure_num].p[0].x = atof(converter);
                 break;
@@ -193,7 +179,11 @@ int converter(char input[], int len, int countStart, int answer_point)
             }
         }
     }
+    return 0;
+}
 
+int output(char input[], int len, int countStart, int answer_point)
+{
     if (answer_point == 1) {
         printf("Circle's x = %.2lf, y = %.2lf\n",
                fig_obj[figure_num].center.x,

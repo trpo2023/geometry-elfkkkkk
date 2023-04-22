@@ -22,7 +22,9 @@ typedef struct {
 
 int init(int numberOf);
 int figure_check(char a[], char b[]);
+int check_brackets(char input[], int len, int countStart, int answer_point);
 int converter(char input[], int len, int countStart, int answer_point);
+int output(char input[], int len, int countStart, int answer_point);
 Figure format_figure(Figure* fig);
 
 #endif
