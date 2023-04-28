@@ -36,10 +36,11 @@ int init(int numberOf)
                 return 0;
             if (output(input, len, countStart, 1) == -1)
                 return 0;
-            }
+        }
 
-    } else if 
-    ((input[0] == triangleExpect[0]) || (input[0] == triangleExpect[0] - ' ')) {
+    } else if (
+            (input[0] == triangleExpect[0])
+            || (input[0] == triangleExpect[0] - ' ')) {
         if (figure_check(input, triangleExpect) == 0) {
             fig_obj[numberOf].type = 1;
             if (check_brackets(input, len, countStart, 2) == 100)
@@ -102,7 +103,8 @@ int check_brackets(char input[], int len, int countStart, int answer_point)
     return 0;
 }
 
-int converter(char input[], int len, int countStart, int answer_point){
+int converter(char input[], int len, int countStart, int answer_point)
+{
     char converter[20];
     int answer = 0;
 
@@ -117,8 +119,7 @@ int converter(char input[], int len, int countStart, int answer_point){
                     && (answer_point == 1)) {
                     return 0;
                 }
-                if (input[countStart + 1] == ' '
-                    || input[countStart + 1] == ','
+                if (input[countStart + 1] == ' ' || input[countStart + 1] == ','
                     || input[countStart + 1] == ')') {
                     converter[k] = input[countStart];
                     converter[k + 1] = '\0';
@@ -130,8 +131,7 @@ int converter(char input[], int len, int countStart, int answer_point){
                 k++;
             }
         }
-        if (answer_point == 1)
-        {
+        if (answer_point == 1) {
             if (answer == 1) {
                 fig_obj[figure_num].center.x = atof(converter);
             }
@@ -142,9 +142,8 @@ int converter(char input[], int len, int countStart, int answer_point){
                 fig_obj[figure_num].radius = atof(converter);
             }
         }
-        if (answer_point == 2)
-        {
-                switch (answer) {
+        if (answer_point == 2) {
+            switch (answer) {
             case 1:
                 fig_obj[figure_num].p[0].x = atof(converter);
                 break;
