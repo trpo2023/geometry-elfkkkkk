@@ -5,12 +5,9 @@
 
 #define SQR(x) (x) * (x)
 
-int figure_num;
-Figure fig_obj[4];
-
 int init(int numberOf)
 {
-    figure_num = numberOf;
+    Figure fig_obj[4];
     char circleExpect[7] = {"circle"};
     char triangleExpect[9] = {"triangle"};
     char input[50] = {'0'};
@@ -32,9 +29,9 @@ int init(int numberOf)
             fig_obj[numberOf].type = 0;
             if (check_brackets(input, len, countStart, 1) == 100)
                 return 0;
-            if (converter(input, len, countStart, 1) == 100)
+            if (converter(input, len, countStart, 1, numberOf, fig_obj) == 100)
                 return 0;
-            if (output(input, len, countStart, 1) == -1)
+            if (output(input, len, countStart, 1, numberOf, fig_obj) == -1)
                 return 0;
         }
 
@@ -45,9 +42,9 @@ int init(int numberOf)
             fig_obj[numberOf].type = 1;
             if (check_brackets(input, len, countStart, 2) == 100)
                 return 0;
-            if (converter(input, len, countStart, 2) == 100)
+            if (converter(input, len, countStart, 2, numberOf, fig_obj) == 100)
                 return 0;
-            if (output(input, len, countStart, 2) == -1)
+            if (output(input, len, countStart, 2, numberOf, fig_obj) == -1)
                 return 0;
         }
     } else {
@@ -55,7 +52,7 @@ int init(int numberOf)
                "'triangle'.\n");
         return 0;
     }
-    return 0;
+    return 100;
 }
 
 int figure_check(char a[], char b[])
@@ -103,7 +100,7 @@ int check_brackets(char input[], int len, int countStart, int answer_point)
     return 0;
 }
 
-int converter(char input[], int len, int countStart, int answer_point)
+int converter(char input[], int len, int countStart, int answer_point, int figure_num, Figure *fig_obj)
 {
     char converter[20];
     int answer = 0;
@@ -117,7 +114,7 @@ int converter(char input[], int len, int countStart, int answer_point)
             } else {
                 if ((input[countStart + 1] == ',') && (answer == 0)
                     && (answer_point == 1)) {
-                    return 0;
+                    return 100;
                 }
                 if (input[countStart + 1] == ' ' || input[countStart + 1] == ','
                     || input[countStart + 1] == ')') {
@@ -181,7 +178,7 @@ int converter(char input[], int len, int countStart, int answer_point)
     return 0;
 }
 
-int output(char input[], int len, int countStart, int answer_point)
+int output(char input[], int len, int countStart, int answer_point, int figure_num, Figure *fig_obj)
 {
     if (answer_point == 1) {
         printf("Circle's x = %.2lf, y = %.2lf\n",
