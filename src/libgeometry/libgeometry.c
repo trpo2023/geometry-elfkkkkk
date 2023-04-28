@@ -100,7 +100,13 @@ int check_brackets(char input[], int len, int countStart, int answer_point)
     return 0;
 }
 
-int converter(char input[], int len, int countStart, int answer_point, int figure_num, Figure *fig_obj)
+int converter(
+        char input[],
+        int len,
+        int countStart,
+        int answer_point,
+        int figure_num,
+        Figure* fig_obj)
 {
     char converter[20];
     int answer = 0;
@@ -178,7 +184,13 @@ int converter(char input[], int len, int countStart, int answer_point, int figur
     return 0;
 }
 
-int output(char input[], int len, int countStart, int answer_point, int figure_num, Figure *fig_obj)
+int output(
+        char input[],
+        int len,
+        int countStart,
+        int answer_point,
+        int figure_num,
+        Figure* fig_obj)
 {
     if (answer_point == 1) {
         printf("Circle's x = %.2lf, y = %.2lf\n",
