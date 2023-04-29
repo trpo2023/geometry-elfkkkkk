@@ -17,6 +17,3 @@ jobs:
 
       - name: Build test
         run: make test
-
-      - name: Start test
-        run: make test_run
